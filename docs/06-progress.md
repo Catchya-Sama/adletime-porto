@@ -1,14 +1,14 @@
 # Progress proyek
 
 ## Status awal
-Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/shared layout, dan halaman Home selesai dibuat sampai tahap 3. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
+Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/shared layout, halaman Home, dan halaman Exhibition selesai dibuat sampai tahap 4. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
 
 | Tahap | Status | Catatan |
 |---|---|---|
 | 1 Fondasi aplikasi | DONE | React/Vite, HashRouter, route Home dan Exhibition, lint/build/dev/preview lulus |
 | 2 Fondasi visual | DONE | Tokens, font, Header desktop/mobile, Footer, shared container, skip link, dan scroll-to-top selesai |
 | 3 Home | DONE | Hero, HireCard, stats, CTA Exhibition, serta Journey accordion berbasis data dan responsif selesai |
-| 4 Exhibition | TODO | |
+| 4 Exhibition | DONE | About, Skills & Tools, Selected Works, tabs aksesibel, detail karya, empty state, serta layout desktop/mobile selesai |
 | 5 Konten pribadi | TODO | Data final belum diberikan |
 | 6 Responsif/aksesibilitas | TODO | |
 | 7 Animasi | TODO | |
@@ -18,7 +18,7 @@ Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/s
 Nama publik, email publik, foto, karya dan thumbnail, link video, bio, pengalaman, angka statistik dan penghargaan. Semua boleh menggunakan placeholder saat pengembangan. Screenshot/video referensi belum tersedia; halaman referensi membutuhkan JavaScript dan tidak dapat diverifikasi secara visual melalui akses web yang tersedia.
 
 ## Sesi berikutnya
-Baca dokumen dan rencanakan tahap 4 (Exhibition) dalam Plan Mode. Jangan mengerjakan motion kompleks, konten final, atau deployment sebelum tahapnya.
+Baca dokumen dan rencanakan tahap 5 (konten dan aset pribadi) dalam Plan Mode. Bila data belum tersedia, identifikasi field/aset yang diperlukan dan gunakan status `NEEDS_CONTENT`; jangan mengerjakan motion kompleks atau deployment sebelum tahapnya.
 
 ### Tahap 1 — Fondasi aplikasi
 - Tanggal: 6 Oktober 2026
@@ -61,6 +61,20 @@ Baca dokumen dan rencanakan tahap 4 (Exhibition) dalam Plan Mode. Jangan mengerj
 - Commit implementasi: `7de336c` (`feat: build portfolio home page`).
 - Keputusan/asumsi baru: Copy perkenalan menjelaskan layanan secara umum tanpa menyatakan riwayat atau pencapaian pribadi. Statistik menggunakan nilai `null` dan ditampilkan sebagai “Belum diisi”. Journey disimpan di `src/data/experience.js`; entri sementara menjelaskan format data yang diperlukan dan tidak dianggap sebagai pengalaman nyata. Tidak ada dependency baru.
 - Pekerjaan berikutnya: Rencanakan tahap 4 — membangun Exhibition dengan About, Skills & Tools, Selected Works, tabs aksesibel, detail karya, state kosong, dan placeholder media sesuai roadmap.
+
+### Tahap 4 — Exhibition
+- Tanggal: 6 Oktober 2026
+- Status: DONE
+- Tujuan dan hasil: Route Exhibition dikembangkan menjadi halaman profil dan galeri interaktif dengan hero/back link serta tiga panel About, Skills & Tools, dan Selected Works. Tabs menggunakan pola ARIA dan state lokal tanpa mengubah route. About menampilkan struktur profil, fakta, statistik, serta pencapaian dengan empty state yang jujur. Skills & Tools memiliki grid siap data dan empty state. Selected Works menampilkan daftar bernomor dan detail terpilih dalam komposisi dua kolom desktop serta susunan daftar-diikuti-detail pada mobile.
+- File yang berubah: `src/pages/Exhibition.jsx`, `src/components/exhibition/AboutPanel.jsx`, `src/components/exhibition/SkillsPanel.jsx`, `src/components/exhibition/ProjectsPanel.jsx`, `src/data/projects.js`, `src/data/profile.js`, dan `src/styles/exhibition.css`.
+- Perintah pemeriksaan dan hasil: Baseline dan pemeriksaan akhir `npm run lint` lulus dengan 0 warning dan 0 error; `npm run build` lulus dengan Vite 8.3.3; `git diff --check` lulus tanpa whitespace error. Validasi Chrome DevTools Protocol pada desktop 1440×1000 dan mobile 390×844 memastikan route `#/exhibition`, atribut/relasi ARIA tabs, pergantian panel, pemilihan proyek, perpindahan fokus mobile, route kembali ke `#/`, dan tidak adanya horizontal overflow pada dokumen.
+- URL preview lokal: `http://localhost:5173/#/exhibition` saat menjalankan `npm run dev`; back link dan wordmark mengarah ke `http://localhost:5173/#/`.
+- Pemeriksaan visual: Dilakukan melalui screenshot Chrome headless untuk ketiga tab, Selected Works sebelum/sesudah pemilihan, serta layout desktop dan mobile. Hero, tab aktif, placeholder profil, empty state tools, daftar karya, detail media, badge placeholder, dan sambungan ke Footer tampil utuh. Pada mobile, tabs tetap berada di dalam viewport melalui area scroll horizontal lokal, daftar muncul sebelum detail, dan detail terpilih berada tepat di bawah header setelah fokus dipindahkan.
+- Pemeriksaan keyboard/reduced motion (jika relevan): Tabs memakai `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-selected`, `aria-controls`, `aria-labelledby`, dan roving `tabIndex`. Pengujian programatis memastikan Arrow Right memindahkan fokus/panel dari About ke Skills & Tools dan End memindahkannya ke Selected Works; implementasi juga menangani Arrow Left dan Home. Item proyek adalah `button` native dengan `aria-pressed`. Pada mobile, memilih proyek memfokuskan detail tanpa smooth motion. Tidak ada animasi baru; aturan global `prefers-reduced-motion` tetap berlaku.
+- Masalah/keterbatasan: Bio, lokasi, ketersediaan, fokus kerja, skill/software, statistik, sertifikasi, foto, karya, thumbnail/video, peran, tahun, dan tautan asli belum tersedia. Karena itu About dan Skills memakai empty state, sedangkan `src/data/projects.js` berisi satu demonstrasi yang secara eksplisit dilabeli “Contoh / placeholder” dan “Bukan karya pemilik”. Audit aksesibilitas dan responsif lintas seluruh breakpoint tetap menjadi scope tahap 6.
+- Commit implementasi: `2319fa6` (`feat: build interactive exhibition page`).
+- Keputusan/asumsi baru: Tidak ada dependency baru. State tab dan proyek tetap lokal; identitas proyek menggunakan ID stabil. Tab memakai activation otomatis saat tombol Arrow/Home/End ditekan. Project detail awal sengaja berupa instruksi sampai pengguna memilih item, agar interaksi terpilih terlihat jelas dan tidak mengesankan placeholder sebagai karya default pemilik.
+- Pekerjaan berikutnya: Rencanakan tahap 5 — integrasikan konten dan aset pribadi yang diberikan pengguna. Jika data belum tersedia, buat inventaris kebutuhan dan tandai tahap `NEEDS_CONTENT`; jangan mengklaim portofolio siap publikasi.
 
 ## Template catatan tahap — salin untuk setiap tahap
 ### Tahap N — [nama]
