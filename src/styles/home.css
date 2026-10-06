@@ -290,6 +290,15 @@
   background: var(--color-text);
 }
 
+.circle-link span:last-child {
+  transition: transform 240ms ease;
+}
+
+.circle-link:hover span:last-child,
+.circle-link:focus-visible span:last-child {
+  transform: translateX(4px);
+}
+
 .journey-section {
   display: grid;
   grid-template-columns: minmax(17rem, 0.72fr) minmax(0, 1.28fr);
@@ -405,6 +414,11 @@
   font-family: var(--font-heading);
   font-size: 1.5rem;
   line-height: 1;
+  transition: transform 240ms ease;
+}
+
+.journey-card__toggle:hover span:last-child {
+  transform: rotate(90deg);
 }
 
 .journey-card__details {

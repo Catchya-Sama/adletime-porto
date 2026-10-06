@@ -1,5 +1,7 @@
 import { useEffect, useId, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { NavLink } from 'react-router-dom'
+import useScrollDirection from '../hooks/useScrollDirection.js'
 
 const navigationItems = [
   { label: 'Home', to: '/', end: true },
@@ -17,6 +19,14 @@ function NavigationLinks({ onNavigate }) {
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuId = useId()
+  const { headerState: scrollHeaderState } = useScrollDirection()
+  const shouldReduceMotion = useReducedMotion()
+  const headerState =
+    shouldReduceMotion && scrollHeaderState === 'merging'
+      ? 'compact'
+      : isMenuOpen && scrollHeaderState !== 'expanded'
+        ? 'compact'
+        : scrollHeaderState
 
   useEffect(() => {
     if (!isMenuOpen) return undefined
@@ -43,23 +53,35 @@ function Header() {
 
   return (
     <>
-      <header className="site-header">
+      <header className={`site-header site-header--${headerState}`} data-header-state={headerState}>
         <div className="site-header__inner container">
-          <NavLink
-            className="site-wordmark"
-            to="/"
-            aria-label="Buka halaman Home"
-            onClick={() => setIsMenuOpen(false)}
+          <motion.div
+            className="site-wordmark-wrap"
+            animate={headerState === 'compact' ? { left: '50%', x: '-50%' } : { left: '0%', x: '0%' }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
-            ADLE
-          </NavLink>
+            <NavLink
+              className="site-wordmark"
+              to="/"
+              aria-label="Buka halaman Home"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              ADLE
+            </NavLink>
+          </motion.div>
 
-          <nav className="desktop-navigation" aria-label="Navigasi utama">
+          <motion.nav
+            className="desktop-navigation"
+            aria-label="Navigasi utama"
+            animate={headerState === 'expanded' ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : { opacity: 0, scale: 0.96, filter: 'blur(4px)' }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.25 }}
+            aria-hidden={headerState !== 'expanded'}
+          >
             <NavigationLinks />
-          </nav>
+          </motion.nav>
 
           <button
-            className="menu-toggle"
+            className={`menu-toggle${headerState !== 'expanded' ? ' menu-toggle--compact' : ''}`}
             type="button"
             aria-expanded={isMenuOpen}
             aria-controls={menuId}
@@ -70,13 +92,23 @@ function Header() {
           </button>
         </div>
 
-        {isMenuOpen && (
-          <nav id={menuId} className="mobile-navigation" aria-label="Navigasi mobile">
-            <div className="mobile-navigation__inner container">
-              <NavigationLinks onNavigate={() => setIsMenuOpen(false)} />
-            </div>
-          </nav>
-        )}
+        <AnimatePresence initial={false}>
+          {isMenuOpen && (
+            <motion.nav
+              id={menuId}
+              className="mobile-navigation"
+              aria-label="Navigasi mobile"
+              initial={shouldReduceMotion ? false : { height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.25 }}
+            >
+              <div className="mobile-navigation__inner container">
+                <NavigationLinks onNavigate={() => setIsMenuOpen(false)} />
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </header>
       <div className="header-spacer" aria-hidden="true" />
     </>

@@ -1,3 +1,6 @@
+import Reveal from '../motion/Reveal.jsx'
+import TextReveal from '../motion/TextReveal.jsx'
+
 function FieldValue({ value, fallback }) {
   return <dd className={value ? undefined : 'exhibition-placeholder'}>{value ?? fallback}</dd>
 }
@@ -8,19 +11,19 @@ function AboutPanel({ profile }) {
   return (
     <div className="about-panel">
       {hasPortrait ? (
-        <div className="about-panel__portrait about-panel__portrait--image">
+        <Reveal className="about-panel__portrait about-panel__portrait--image" direction="left">
           <img src={profile.portrait.src} alt={profile.portrait.alt} />
-        </div>
+        </Reveal>
       ) : (
-        <div className="about-panel__portrait" role="img" aria-label="Foto profil belum tersedia">
+        <Reveal className="about-panel__portrait" role="img" aria-label="Foto profil belum tersedia" direction="left">
           <span>Foto profil</span>
           <small>Belum tersedia</small>
-        </div>
+        </Reveal>
       )}
 
-      <div className="about-panel__story">
+      <Reveal className="about-panel__story" delay={0.1}>
         <p className="section-kicker">Profile &amp; practice</p>
-        <h2>Tentang kreator di balik setiap frame.</h2>
+        <TextReveal as="h2" delay={0.1}>Tentang kreator di balik setiap frame.</TextReveal>
         <p className={profile.bio ? undefined : 'exhibition-placeholder'}>
           {profile.bio ??
             'Bio pribadi belum diisi. Bagian ini kelak menjelaskan pendekatan kreatif, pengalaman, dan cara bekerja secara ringkas.'}
@@ -43,9 +46,9 @@ function AboutPanel({ profile }) {
             <FieldValue value={profile.availability} fallback="Belum dikonfirmasi" />
           </div>
         </dl>
-      </div>
+      </Reveal>
 
-      <aside className="about-panel__summary" aria-label="Ringkasan profil">
+      <Reveal as="aside" className="about-panel__summary" aria-label="Ringkasan profil" delay={0.2} direction="right">
         <p className="section-kicker">At a glance</p>
         <dl className="exhibition-stats">
           {profile.stats.map((stat) => (
@@ -89,7 +92,7 @@ function AboutPanel({ profile }) {
             </p>
           )}
         </div>
-      </aside>
+      </Reveal>
     </div>
   )
 }

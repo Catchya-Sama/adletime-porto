@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import AboutPanel from '../components/exhibition/AboutPanel.jsx'
 import ProjectsPanel from '../components/exhibition/ProjectsPanel.jsx'
 import SkillsPanel from '../components/exhibition/SkillsPanel.jsx'
 import profile from '../data/profile.js'
 import projects from '../data/projects.js'
+import TextReveal from '../components/motion/TextReveal.jsx'
 import '../styles/exhibition.css'
 
 const tabs = [
@@ -16,6 +18,7 @@ const tabs = [
 function Exhibition() {
   const [activeTab, setActiveTab] = useState(tabs[0].id)
   const tabRefs = useRef([])
+  const shouldReduceMotion = useReducedMotion()
 
   const activateTab = (index) => {
     setActiveTab(tabs[index].id)
@@ -47,16 +50,16 @@ function Exhibition() {
       <header className="exhibition-hero container">
         <div>
           <p className="section-kicker">A closer look</p>
-          <h1>
+          <TextReveal as="h1">
             The <em>Exhibition</em>
-          </h1>
+          </TextReveal>
         </div>
         <div className="exhibition-hero__intro">
           <p>
             Ruang untuk mengenal profil, proses, perangkat kerja, dan karya pilihan dari
             perspektif yang lebih dekat.
           </p>
-          <Link to="/">← Kembali ke Home</Link>
+          <Link className="motion-link" to="/">← Kembali ke Home</Link>
         </div>
       </header>
 
@@ -87,15 +90,19 @@ function Exhibition() {
           })}
         </div>
 
-        <div
+        <motion.div
+          key={activeTab}
           className="exhibition-tabpanel"
           id={`exhibition-panel-${activeTab}`}
           role="tabpanel"
           aria-labelledby={`exhibition-tab-${activeTab}`}
           tabIndex="0"
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           {renderActivePanel()}
-        </div>
+        </motion.div>
       </section>
     </main>
   )

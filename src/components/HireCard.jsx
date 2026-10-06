@@ -1,3 +1,5 @@
+import Reveal from './motion/Reveal.jsx'
+
 function HireCard({ profile }) {
   const hasPortrait = Boolean(profile.portrait?.src && profile.portrait?.alt)
   const contactContent = profile.email ? (
@@ -11,7 +13,14 @@ function HireCard({ profile }) {
   )
 
   return (
-    <article className="hire-card" aria-label="Kartu kontak">
+    <Reveal
+      as="article"
+      className="hire-card"
+      aria-label="Kartu kontak"
+      delay={0.6}
+      distance={30}
+      duration={0.7}
+    >
       {hasPortrait ? (
         <img
           className="hire-card__portrait hire-card__portrait--image"
@@ -37,7 +46,7 @@ function HireCard({ profile }) {
         <br />
         Me
       </span>
-    </article>
+    </Reveal>
   )
 }
 

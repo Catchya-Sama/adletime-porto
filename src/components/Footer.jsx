@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import profile from '../data/profile.js'
+import Reveal from './motion/Reveal.jsx'
 
 const currentYear = new Date().getFullYear()
 
 function Footer() {
   return (
-    <footer className="site-footer">
+    <Reveal as="footer" className="site-footer" viewportAmount={0.08}>
       <div className="site-footer__inner container">
         <div className="site-footer__intro">
           <p className="footer-label">Let&apos;s create something meaningful.</p>
@@ -16,8 +17,8 @@ function Footer() {
         <div className="site-footer__columns">
           <nav className="footer-navigation" aria-label="Navigasi footer">
             <p className="footer-heading">Jelajahi</p>
-            <Link to="/">Home</Link>
-            <Link to="/exhibition">Exhibition</Link>
+            <Link className="motion-link" to="/">Home</Link>
+            <Link className="motion-link" to="/exhibition">Exhibition</Link>
           </nav>
 
           <div className="footer-contact">
@@ -36,7 +37,7 @@ function Footer() {
           <p className="placeholder-text">Identitas dan tautan final menunggu konfirmasi.</p>
         </div>
       </div>
-    </footer>
+    </Reveal>
   )
 }
 

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
+import TextReveal from '../motion/TextReveal.jsx'
 
 function ProjectMedia({ project }) {
   if (project.thumbnail) {
@@ -13,27 +15,50 @@ function ProjectMedia({ project }) {
   )
 }
 
-function ProjectDetail({ project, detailRef }) {
+function ProjectDetail({ project, detailRef, shouldReduceMotion }) {
   if (!project) {
     return (
-      <div className="project-detail project-detail--empty" ref={detailRef} tabIndex="-1">
+      <motion.div
+        className="project-detail project-detail--empty"
+        ref={detailRef}
+        tabIndex="-1"
+        initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={
+          shouldReduceMotion
+            ? { duration: 0 }
+            : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+        }
+      >
         <p className="section-kicker">Project detail</p>
         <h3>Pilih sebuah karya dari daftar.</h3>
         <p>
           Detail media, peran, konteks, tools, dan tautan karya akan ditampilkan di area
           ini.
         </p>
-      </div>
+      </motion.div>
     )
   }
 
   return (
-    <article className="project-detail" ref={detailRef} tabIndex="-1">
+    <motion.article
+      key={project.id}
+      className="project-detail"
+      ref={detailRef}
+      tabIndex="-1"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={
+        shouldReduceMotion
+          ? { duration: 0 }
+          : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+      }
+    >
       <ProjectMedia project={project} />
       <div className="project-detail__heading">
         <div>
           <p className="project-detail__category">{project.category}</p>
-          <h3>{project.title}</h3>
+          <TextReveal as="h3">{project.title}</TextReveal>
         </div>
         {project.isPlaceholder && <span className="project-detail__badge">Bukan karya pemilik</span>}
       </div>
@@ -70,13 +95,14 @@ function ProjectDetail({ project, detailRef }) {
           )}
         </div>
       )}
-    </article>
+    </motion.article>
   )
 }
 
 function ProjectsPanel({ projects }) {
   const [selectedProjectId, setSelectedProjectId] = useState(null)
   const detailRef = useRef(null)
+  const shouldReduceMotion = useReducedMotion()
   const selectedProject =
     projects.find((project) => project.id === selectedProjectId) ?? null
 
@@ -125,7 +151,12 @@ function ProjectsPanel({ projects }) {
         </ol>
       </div>
 
-      <ProjectDetail project={selectedProject} detailRef={detailRef} />
+      <ProjectDetail
+        key={selectedProjectId ?? 'empty'}
+        project={selectedProject}
+        detailRef={detailRef}
+        shouldReduceMotion={shouldReduceMotion}
+      />
     </div>
   )
 }
