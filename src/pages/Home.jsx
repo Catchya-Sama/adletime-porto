@@ -1,17 +1,16 @@
-import { Link } from 'react-router-dom'
+import ExhibitionCTA from '../components/ExhibitionCTA.jsx'
+import Hero from '../components/Hero.jsx'
+import Journey from '../components/Journey.jsx'
+import experiences from '../data/experience.js'
+import profile from '../data/profile.js'
+import '../styles/home.css'
 
 function Home() {
   return (
-    <main className="page container" id="main-content" tabIndex="-1">
-      <p className="eyebrow">Fondasi portofolio</p>
-      <h1>Video Editor &amp; Motion Graphic Designer</h1>
-      <p className="page-intro">
-        Halaman Home sudah aktif. Konten profil dan layout lengkap akan dibangun
-        pada tahap berikutnya menggunakan data yang telah dikonfirmasi.
-      </p>
-      <Link className="primary-link" to="/exhibition">
-        Buka Exhibition
-      </Link>
+    <main className="home-page" id="main-content" tabIndex="-1">
+      <Hero profile={profile} />
+      <ExhibitionCTA />
+      <Journey experiences={experiences} />
     </main>
   )
 }

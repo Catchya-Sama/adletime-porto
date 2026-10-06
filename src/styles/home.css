@@ -1,0 +1,507 @@
+.home-page {
+  overflow: hidden;
+}
+
+.section-kicker {
+  margin-bottom: var(--space-3);
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.home-hero {
+  display: grid;
+  min-height: calc(100vh - var(--header-height));
+  grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+  gap: clamp(3rem, 7vw, 8rem);
+  align-items: center;
+  padding-block: clamp(4rem, 8vw, 8rem);
+}
+
+.home-hero__statement h1 {
+  max-width: 9ch;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(4rem, 8.2vw, 8.25rem);
+  line-height: 0.86;
+}
+
+.home-hero__statement h1 em {
+  display: block;
+  font-weight: 400;
+}
+
+.home-hero__profile {
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.home-hero__intro {
+  padding-bottom: var(--space-7);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.home-hero__intro > p:nth-child(2) {
+  max-width: 31rem;
+  margin-bottom: var(--space-5);
+  font-family: var(--font-heading);
+  font-size: clamp(1.65rem, 3vw, 2.75rem);
+  line-height: 1.25;
+}
+
+.home-hero__profession {
+  margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hire-card {
+  position: relative;
+  display: grid;
+  max-width: 39rem;
+  grid-template-columns: 7rem minmax(0, 1fr) auto;
+  gap: var(--space-5);
+  align-items: center;
+  padding: var(--space-4);
+  color: var(--color-footer-text);
+  background: var(--color-footer);
+  border: 1px dashed var(--color-accent);
+  border-radius: var(--radius-medium);
+}
+
+.hire-card::before,
+.hire-card::after {
+  position: absolute;
+  right: 4.75rem;
+  width: 1rem;
+  height: 1rem;
+  background: var(--color-background);
+  border-radius: 50%;
+  content: '';
+  transform: translateX(50%);
+}
+
+.hire-card::before {
+  top: -0.55rem;
+}
+
+.hire-card::after {
+  bottom: -0.55rem;
+}
+
+.hire-card__portrait {
+  display: flex;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #a9a29b;
+  background: #303030;
+  border: 1px solid #4d4d4d;
+  border-radius: var(--radius-small);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hire-card__portrait small {
+  margin-top: var(--space-1);
+  font-size: 0.58rem;
+}
+
+.hire-card__content {
+  min-width: 0;
+}
+
+.hire-card__label {
+  margin-bottom: var(--space-2);
+  color: var(--color-accent);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hire-card h2 {
+  overflow: hidden;
+  margin-bottom: var(--space-1);
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hire-card__content > p:not(.hire-card__label) {
+  margin-bottom: var(--space-3);
+  color: #bcb5af;
+  font-size: 0.75rem;
+}
+
+.hire-card__contact {
+  color: var(--color-footer-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.hire-card__contact--disabled {
+  color: #817b76;
+}
+
+.hire-card__stamp {
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  place-content: center;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 0.9;
+  text-align: center;
+  transform: rotate(-9deg);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-block: var(--space-6);
+}
+
+.stat-card {
+  min-height: 8.5rem;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.stat-card dt {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stat-card dd {
+  margin: var(--space-4) 0 0;
+  color: var(--color-accent);
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+}
+
+.stat-card .stat-card__placeholder {
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.credentials-block {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.credentials-block__empty {
+  max-width: 34rem;
+  margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.credentials-block ul {
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.exhibition-cta {
+  background: var(--color-background-alt);
+  border-block: 1px solid var(--color-border);
+}
+
+.exhibition-cta__inner {
+  display: flex;
+  min-height: 42rem;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-9);
+  flex-direction: column;
+  text-align: center;
+}
+
+.section-divider {
+  width: 3.75rem;
+  height: 2px;
+  margin-bottom: var(--space-6);
+  background: var(--color-accent);
+}
+
+.exhibition-cta h2,
+.journey-section h2 {
+  margin-bottom: var(--space-5);
+  color: var(--color-accent);
+  font-size: clamp(3.5rem, 9vw, 8.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+.exhibition-cta__inner > p:not(.section-kicker) {
+  max-width: 38rem;
+  margin-bottom: var(--space-7);
+  color: var(--color-muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.circle-link {
+  display: inline-flex;
+  min-width: 9.5rem;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--color-text);
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.circle-link:hover {
+  color: var(--color-footer-text);
+  background: var(--color-text);
+}
+
+.journey-section {
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(3rem, 8vw, 9rem);
+  padding-block: clamp(5rem, 10vw, 10rem);
+}
+
+.journey-section__heading {
+  align-self: start;
+}
+
+.journey-section h2 {
+  max-width: 5ch;
+}
+
+.journey-section h2 em {
+  font-weight: 400;
+}
+
+.journey-section__heading > p:last-child {
+  max-width: 27rem;
+  color: var(--color-muted);
+  line-height: 1.75;
+}
+
+.journey-timeline {
+  position: relative;
+  padding-left: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+.journey-timeline::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--color-border);
+  content: '';
+}
+
+.journey-card {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.journey-card__marker {
+  position: absolute;
+  top: 2.75rem;
+  left: calc(clamp(1.75rem, 4vw, 3.5rem) * -1);
+  width: 0.85rem;
+  height: 0.85rem;
+  background: var(--color-accent);
+  border: 3px solid var(--color-background);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.journey-card__period {
+  margin-bottom: var(--space-3);
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.journey-card h3 {
+  max-width: 18ch;
+  margin-bottom: var(--space-3);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.journey-card__organization {
+  display: inline-block;
+  margin-bottom: var(--space-5);
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-muted);
+  background: var(--color-background-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.journey-card__summary {
+  max-width: 42rem;
+  color: var(--color-muted);
+  line-height: 1.75;
+}
+
+.journey-card__toggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-6);
+  padding: var(--space-4) 0 0;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.journey-card__toggle span:last-child {
+  color: var(--color-accent);
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.journey-card__details {
+  padding-top: var(--space-5);
+  color: var(--color-muted);
+  line-height: 1.75;
+}
+
+.journey-card__details ul {
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.journey-card__details li + li {
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 64rem) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero__statement h1 {
+    max-width: 10ch;
+  }
+
+  .home-hero__profile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
+    gap: var(--space-6);
+  }
+
+  .home-hero__intro {
+    grid-column: 1 / -1;
+  }
+
+  .stats-grid {
+    margin-block: 0;
+  }
+
+  .credentials-block {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .home-hero {
+    min-height: auto;
+    gap: var(--space-8);
+    padding-block: var(--space-8);
+  }
+
+  .home-hero__statement h1 {
+    font-size: clamp(3.5rem, 16vw, 6rem);
+  }
+
+  .home-hero__profile {
+    display: flex;
+  }
+
+  .hire-card {
+    grid-template-columns: 4.75rem minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .hire-card::before,
+  .hire-card::after {
+    display: none;
+  }
+
+  .hire-card__stamp {
+    display: none;
+  }
+
+  .hire-card h2 {
+    font-size: 1.25rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    min-height: 7rem;
+  }
+
+  .exhibition-cta__inner {
+    min-height: 36rem;
+  }
+
+  .exhibition-cta h2,
+  .journey-section h2 {
+    font-size: clamp(3.25rem, 17vw, 5rem);
+  }
+
+  .journey-section {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+
+  .journey-card__marker {
+    top: 2.25rem;
+  }
+}

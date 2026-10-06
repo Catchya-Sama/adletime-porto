@@ -112,6 +112,10 @@ h3 {
   outline: none;
 }
 
+.home-page:focus {
+  outline: none;
+}
+
 .eyebrow {
   margin-bottom: var(--space-3);
   color: var(--color-accent);
