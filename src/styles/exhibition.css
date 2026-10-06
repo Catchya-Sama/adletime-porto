@@ -116,6 +116,17 @@
   text-align: center;
 }
 
+.about-panel__portrait--image {
+  overflow: hidden;
+  padding: 0;
+}
+
+.about-panel__portrait--image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .about-panel__portrait::before,
 .about-panel__portrait::after {
   position: absolute;
@@ -234,6 +245,30 @@
 
 .about-panel__credentials {
   padding-top: var(--space-5);
+}
+
+.about-panel__documents {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.about-panel__documents h3 {
+  margin-bottom: var(--space-3);
+  font-size: 1rem;
+}
+
+.about-panel__documents ul {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-panel__documents a {
+  font-size: 0.82rem;
+  font-weight: 700;
 }
 
 .about-panel__credentials h3 {

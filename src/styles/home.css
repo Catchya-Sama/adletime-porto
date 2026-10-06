@@ -110,6 +110,12 @@
   text-transform: uppercase;
 }
 
+.hire-card__portrait--image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 .hire-card__portrait small {
   margin-top: var(--space-1);
   font-size: 0.58rem;

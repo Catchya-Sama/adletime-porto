@@ -3,12 +3,20 @@ function FieldValue({ value, fallback }) {
 }
 
 function AboutPanel({ profile }) {
+  const hasPortrait = Boolean(profile.portrait?.src && profile.portrait?.alt)
+
   return (
     <div className="about-panel">
-      <div className="about-panel__portrait" role="img" aria-label="Foto profil belum tersedia">
-        <span>Foto profil</span>
-        <small>Belum tersedia</small>
-      </div>
+      {hasPortrait ? (
+        <div className="about-panel__portrait about-panel__portrait--image">
+          <img src={profile.portrait.src} alt={profile.portrait.alt} />
+        </div>
+      ) : (
+        <div className="about-panel__portrait" role="img" aria-label="Foto profil belum tersedia">
+          <span>Foto profil</span>
+          <small>Belum tersedia</small>
+        </div>
+      )}
 
       <div className="about-panel__story">
         <p className="section-kicker">Profile &amp; practice</p>
@@ -60,6 +68,25 @@ function AboutPanel({ profile }) {
             </ul>
           ) : (
             <p className="exhibition-placeholder">Belum ada data terkonfirmasi.</p>
+          )}
+        </div>
+
+        <div className="about-panel__documents">
+          <h3>Dokumen publik</h3>
+          {profile.documents.length ? (
+            <ul>
+              {profile.documents.map((document) => (
+                <li key={document.id}>
+                  <a href={document.url} target="_blank" rel="noreferrer">
+                    {document.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="exhibition-placeholder">
+              CV atau dokumen publik belum ditambahkan.
+            </p>
           )}
         </div>
       </aside>

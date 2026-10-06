@@ -1,4 +1,5 @@
 function HireCard({ profile }) {
+  const hasPortrait = Boolean(profile.portrait?.src && profile.portrait?.alt)
   const contactContent = profile.email ? (
     <a className="hire-card__contact" href={`mailto:${profile.email}`}>
       Hubungi saya
@@ -11,10 +12,18 @@ function HireCard({ profile }) {
 
   return (
     <article className="hire-card" aria-label="Kartu kontak">
-      <div className="hire-card__portrait" aria-label="Placeholder foto profil" role="img">
-        <span>Foto</span>
-        <small>Tahap 5</small>
-      </div>
+      {hasPortrait ? (
+        <img
+          className="hire-card__portrait hire-card__portrait--image"
+          src={profile.portrait.src}
+          alt={profile.portrait.alt}
+        />
+      ) : (
+        <div className="hire-card__portrait" aria-label="Foto profil belum tersedia" role="img">
+          <span>Foto</span>
+          <small>Belum tersedia</small>
+        </div>
+      )}
 
       <div className="hire-card__content">
         <p className="hire-card__label">Available for creative work</p>
