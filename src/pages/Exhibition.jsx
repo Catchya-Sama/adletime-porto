@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 function Exhibition() {
   return (
-    <main className="page" id="main-content">
+    <main className="page container" id="main-content" tabIndex="-1">
       <p className="eyebrow">Exhibition</p>
       <h1>Selected Works</h1>
       <p className="page-intro">
