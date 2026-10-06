@@ -1,17 +1,102 @@
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import AboutPanel from '../components/exhibition/AboutPanel.jsx'
+import ProjectsPanel from '../components/exhibition/ProjectsPanel.jsx'
+import SkillsPanel from '../components/exhibition/SkillsPanel.jsx'
+import profile from '../data/profile.js'
+import projects from '../data/projects.js'
+import '../styles/exhibition.css'
+
+const tabs = [
+  { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Skills & Tools' },
+  { id: 'works', label: 'Selected Works' },
+]
 
 function Exhibition() {
+  const [activeTab, setActiveTab] = useState(tabs[0].id)
+  const tabRefs = useRef([])
+
+  const activateTab = (index) => {
+    setActiveTab(tabs[index].id)
+    tabRefs.current[index]?.focus()
+  }
+
+  const handleTabKeyDown = (event, index) => {
+    let nextIndex = null
+
+    if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length
+    if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length
+    if (event.key === 'Home') nextIndex = 0
+    if (event.key === 'End') nextIndex = tabs.length - 1
+
+    if (nextIndex !== null) {
+      event.preventDefault()
+      activateTab(nextIndex)
+    }
+  }
+
+  const renderActivePanel = () => {
+    if (activeTab === 'about') return <AboutPanel profile={profile} />
+    if (activeTab === 'skills') return <SkillsPanel profile={profile} />
+    return <ProjectsPanel projects={projects} />
+  }
+
   return (
-    <main className="page container" id="main-content" tabIndex="-1">
-      <p className="eyebrow">Exhibition</p>
-      <h1>Selected Works</h1>
-      <p className="page-intro">
-        Route Exhibition sudah aktif. Tab About, Skills &amp; Tools, dan Selected
-        Works akan ditambahkan pada tahap khusus Exhibition.
-      </p>
-      <Link className="primary-link" to="/">
-        Kembali ke Home
-      </Link>
+    <main className="exhibition-page" id="main-content" tabIndex="-1">
+      <header className="exhibition-hero container">
+        <div>
+          <p className="section-kicker">A closer look</p>
+          <h1>
+            The <em>Exhibition</em>
+          </h1>
+        </div>
+        <div className="exhibition-hero__intro">
+          <p>
+            Ruang untuk mengenal profil, proses, perangkat kerja, dan karya pilihan dari
+            perspektif yang lebih dekat.
+          </p>
+          <Link to="/">← Kembali ke Home</Link>
+        </div>
+      </header>
+
+      <section className="exhibition-content container" aria-label="Konten Exhibition">
+        <div className="exhibition-tabs" role="tablist" aria-label="Bagian Exhibition">
+          {tabs.map((tab, index) => {
+            const isActive = activeTab === tab.id
+
+            return (
+              <button
+                id={`exhibition-tab-${tab.id}`}
+                key={tab.id}
+                ref={(element) => {
+                  tabRefs.current[index] = element
+                }}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`exhibition-panel-${tab.id}`}
+                tabIndex={isActive ? 0 : -1}
+                onClick={() => setActiveTab(tab.id)}
+                onKeyDown={(event) => handleTabKeyDown(event, index)}
+              >
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                {tab.label}
+              </button>
+            )
+          })}
+        </div>
+
+        <div
+          className="exhibition-tabpanel"
+          id={`exhibition-panel-${activeTab}`}
+          role="tabpanel"
+          aria-labelledby={`exhibition-tab-${activeTab}`}
+          tabIndex="0"
+        >
+          {renderActivePanel()}
+        </div>
+      </section>
     </main>
   )
 }

@@ -5,6 +5,11 @@ const profile = {
     'Saya membantu menyusun gambar, ritme, motion, dan efek visual menjadi cerita yang jelas serta berkesan.',
   shortIntro:
     'Portofolio editing, motion graphics, dan VFX. Profil lengkap akan ditambahkan setelah data final dikonfirmasi.',
+  bio: null,
+  location: null,
+  availability: null,
+  focusAreas: [],
+  tools: [],
   email: null,
   socialLinks: [],
   stats: [
