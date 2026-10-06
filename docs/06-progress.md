@@ -1,7 +1,7 @@
 # Progress proyek
 
 ## Status awal
-Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/shared layout, halaman Home, halaman Exhibition, serta audit responsif dan aksesibilitas selesai dibuat sampai tahap 6. Tahap 5 sudah menyiapkan slot serta panduan aset, tetapi tetap `NEEDS_CONTENT` sampai konten pribadi final diberikan dan dikonfirmasi. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
+Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/shared layout, halaman Home, halaman Exhibition, audit responsif/aksesibilitas, serta sistem animasi dan QA gerakan selesai dibuat sampai tahap 7. Tahap 5 sudah menyiapkan slot serta panduan aset, tetapi tetap `NEEDS_CONTENT` sampai konten pribadi final diberikan dan dikonfirmasi. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
 
 | Tahap | Status | Catatan |
 |---|---|---|
@@ -11,14 +11,14 @@ Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/s
 | 4 Exhibition | DONE | About, Skills & Tools, Selected Works, tabs aksesibel, detail karya, empty state, serta layout desktop/mobile selesai |
 | 5 Konten pribadi | NEEDS_CONTENT | Preview slot foto/dokumen dan panduan aset tersedia; data serta aset final belum diberikan |
 | 6 Responsif/aksesibilitas | DONE | Home dan Exhibition lulus audit 360/390/768/1024/1440 px, reflow 320 px, keyboard/fokus, kontras, gambar, console, lint, dan build |
-| 7 Animasi | TODO | |
+| 7 Animasi | DONE | Motion React, reveal Home/Exhibition, header berbasis arah scroll, micro-interaction, reduced motion, dan QA lintas breakpoint selesai |
 | 8 GitHub Pages | TODO | Remote GitHub aktif; deployment belum dikerjakan |
 
 ## Kekurangan informasi
 Nama publik, email publik, foto profil, CV/dokumen publik, karya dan thumbnail, link video, bio, pengalaman, lokasi/ketersediaan, fokus kerja, software, angka statistik, sertifikasi, penghargaan, dan tautan sosial. Semua boleh menggunakan placeholder yang jelas saat pengembangan. Screenshot/video referensi belum tersedia; halaman referensi membutuhkan JavaScript dan tidak dapat diverifikasi secara visual melalui akses web yang tersedia.
 
 ## Sesi berikutnya
-Tahap implementasi berikutnya adalah Tahap 7 — animasi dan QA gerakan—bila diminta pengguna. Animasi harus mengikuti `docs/04-motion-spec.md`, menghormati reduced motion, dan tidak mengubah tinggi layout/header secara tidak stabil. Secara paralel, gunakan preview lokal dan `docs/08-content-assets.md` untuk memilih konten/aset publik; Tahap 5 tetap `NEEDS_CONTENT` dan portofolio belum siap publikasi sampai data pribadi final dikonfirmasi.
+Tahap implementasi berikutnya adalah Tahap 8 — GitHub Pages—hanya bila diminta dan disetujui pengguna; belum ada push atau deployment pada Tahap 7. Secara paralel, gunakan preview lokal dan `docs/08-content-assets.md` untuk memilih konten/aset publik. Tahap 5 tetap `NEEDS_CONTENT` dan portofolio belum siap publikasi sampai data pribadi final dikonfirmasi.
 
 ### Tahap 1 — Fondasi aplikasi
 - Tanggal: 6 Oktober 2026
@@ -103,6 +103,20 @@ Tahap implementasi berikutnya adalah Tahap 7 — animasi dan QA gerakan—bila d
 - Commit implementasi: `03af65b` (`fix: refine responsive layout and accessibility`).
 - Keputusan/asumsi baru: Tidak ada dependency baru dan tidak ada perubahan arah desain. Favicon menggunakan bentuk huruf “A” generik dengan warna token proyek, bukan foto, logo klien, atau identitas pribadi final. Area tab mobile tetap scrollable secara lokal; menyusun semua tab menjadi beberapa baris tidak dipilih karena akan mengubah komposisi desain.
 - Pekerjaan berikutnya: Jika pengguna meminta, lanjutkan Tahap 7 untuk motion/header berbasis scroll dan QA reduced motion. Jangan push atau deploy. Integrasi konten final tetap dapat dilakukan terpisah untuk menyelesaikan Tahap 5.
+
+### Tahap 7 — Animasi dan QA gerakan
+- Tanggal: 6 Oktober 2026
+- Status: DONE
+- Tujuan dan hasil: Menambahkan satu sistem motion berbasis paket `motion` melalui `motion/react` tanpa redesign atau perubahan konten pribadi. Abstraksi `Reveal` menyediakan viewport reveal sekali jalan dan `TextReveal` menyediakan mask judul. Home memakai reveal untuk hero, HireCard, statistik, CTA Exhibition, Journey dengan stagger, dan Footer. Exhibition memakai text reveal, transisi panel tab, stagger daftar tools, transisi detail proyek, serta micro-interaction ringan. Header kini memiliki state `expanded`, `merging`, dan `compact` berdasarkan arah scroll dengan threshold 50 px, toleransi 10 px, serta jeda merging 500 ms. Tinggi spacer tetap konstan dan menu tetap tersedia ketika compact.
+- File yang berubah: `package.json`, `package-lock.json`, `src/main.jsx`, `src/components/Header.jsx`, `src/components/Hero.jsx`, `src/components/HireCard.jsx`, `src/components/StatsCards.jsx`, `src/components/ExhibitionCTA.jsx`, `src/components/Journey.jsx`, `src/components/Footer.jsx`, panel Exhibition, `src/pages/Exhibition.jsx`, `src/components/motion/Reveal.jsx`, `src/components/motion/TextReveal.jsx`, `src/hooks/useScrollDirection.js`, `src/styles/motion.css`, `src/styles/layout.css`, `src/styles/home.css`, dan `src/styles/exhibition.css`.
+- Perintah pemeriksaan dan hasil: `npm install motion@14.0.0` berhasil tanpa vulnerability; `npm run lint` lulus dengan 0 warning dan 0 error; `npm run build` lulus dengan Vite 8.3.3; `git diff --check` dan staged diff check lulus. Production preview diuji dengan Chrome DevTools Protocol pada Home dan Exhibition di 360×844, 390×844, 768×1000, 1024×1000, serta 1440×1000; reflow 320×700 juga lulus tanpa horizontal overflow. Console tidak menghasilkan warning/error aplikasi.
+- URL preview lokal: Jalankan `npm run dev` untuk pengembangan di `http://localhost:5173/` dan `http://localhost:5173/#/exhibition`. QA Tahap 7 menggunakan production preview sementara di `http://127.0.0.1:4174/`; proses sementara sudah dihentikan setelah audit.
+- Pemeriksaan visual: Screenshot ditinjau untuk header compact desktop 1440×1000, detail proyek Exhibition mobile 390×844, dan Home reduced motion desktop 1440×1000. Wordmark compact tetap terpusat, tombol menu tetap terlihat, ruang dokumen tidak bergeser, detail proyek mobile tetap utuh, dan reduced motion langsung menampilkan keadaan akhir tanpa garis mask. Seluruh breakpoint yang diuji memiliki `scrollWidth` sama dengan `clientWidth`.
+- Pemeriksaan keyboard/reduced motion (jika relevan): Menu mobile tetap membuka/menutup dan Escape menghapus panel serta mengembalikan `aria-expanded="false"`. Menu dari header compact desktop tetap terlihat dan memiliki dua tautan navigasi. Scroll turun menghasilkan `expanded → merging → compact`, scroll naik mengembalikan `expanded`, sedangkan reduced motion melewati fase merging. Pergantian tab Works mempertahankan `aria-selected`; pemilihan karya mempertahankan `aria-pressed` dan memfokuskan detail pada mobile. Journey tetap dapat dibuka dengan `aria-expanded`. Perubahan preferensi reduced motion saat runtime terdeteksi: garis mask dihapus, reveal tidak disembunyikan atau ditunda, transform menjadi keadaan akhir, dan transition CSS dekoratif dipangkas.
+- Masalah/keterbatasan: Tahap 5 tetap `NEEDS_CONTENT`; placeholder dan proyek demonstrasi masih ada. Bundle JavaScript bertambah karena dependency Motion, tetapi build tetap berhasil. Audit memakai Chrome headless dan tidak menggantikan pengujian vestibular/screen reader manual pada perangkat pengguna. Partikel klik tidak diimplementasikan karena opsional dan tidak diperlukan untuk memenuhi scope gerakan utama.
+- Commit implementasi: `f766ef5` (`feat: add portfolio motion system`).
+- Keputusan/asumsi baru: Menggunakan satu library `motion@14.0.0` yang kompatibel dengan React 19 dan Vite. `MotionConfig reducedMotion="user"`, `useReducedMotion`, serta media query CSS digunakan bersama agar reduced motion menghapus delay, mask, transform, dan dekorasi bergerak—bukan hanya memendekkan durasi. Reveal viewport berjalan sekali agar pengalaman tidak repetitif. Header tidak mengubah tinggi layout; state compact hanya mengubah presentasi internal.
+- Pekerjaan berikutnya: Tahap 8 dan deployment hanya dikerjakan bila diminta; jangan push secara otomatis. Konten/aset final masih diperlukan untuk menyelesaikan Tahap 5 dan menyiapkan publikasi.
 
 ## Template catatan tahap — salin untuk setiap tahap
 ### Tahap N — [nama]
