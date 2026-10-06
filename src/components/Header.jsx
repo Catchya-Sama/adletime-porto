@@ -27,8 +27,18 @@ function Header() {
       }
     }
 
+    const desktopQuery = window.matchMedia('(min-width: 48rem)')
+    const closeAtDesktop = (event) => {
+      if (event.matches) setIsMenuOpen(false)
+    }
+
     window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
+    desktopQuery.addEventListener('change', closeAtDesktop)
+
+    return () => {
+      window.removeEventListener('keydown', closeOnEscape)
+      desktopQuery.removeEventListener('change', closeAtDesktop)
+    }
   }, [isMenuOpen])
 
   return (

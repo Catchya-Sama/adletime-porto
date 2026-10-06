@@ -116,6 +116,11 @@ h3 {
   outline: none;
 }
 
+.home-page:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: -3px;
+}
+
 .eyebrow {
   margin-bottom: var(--space-3);
   color: var(--color-accent);

@@ -1,11 +1,22 @@
 .exhibition-page {
-  overflow: hidden;
+  overflow: clip;
 }
 
 .exhibition-page:focus,
 .exhibition-tabpanel:focus,
 .project-detail:focus {
   outline: none;
+}
+
+.exhibition-page:focus-visible,
+.exhibition-tabpanel:focus-visible,
+.project-detail:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 4px;
+}
+
+.exhibition-page:focus-visible {
+  outline-offset: -3px;
 }
 
 .exhibition-hero {
