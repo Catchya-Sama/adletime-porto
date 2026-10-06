@@ -1,7 +1,7 @@
 # Progress proyek
 
 ## Status awal
-Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/shared layout, halaman Home, dan halaman Exhibition selesai dibuat sampai tahap 4. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
+Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/shared layout, halaman Home, dan halaman Exhibition selesai dibuat sampai tahap 4. Tahap 5 sudah menyiapkan slot serta panduan aset, tetapi tetap `NEEDS_CONTENT` sampai konten pribadi final diberikan dan dikonfirmasi. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
 
 | Tahap | Status | Catatan |
 |---|---|---|
@@ -9,16 +9,16 @@ Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/s
 | 2 Fondasi visual | DONE | Tokens, font, Header desktop/mobile, Footer, shared container, skip link, dan scroll-to-top selesai |
 | 3 Home | DONE | Hero, HireCard, stats, CTA Exhibition, serta Journey accordion berbasis data dan responsif selesai |
 | 4 Exhibition | DONE | About, Skills & Tools, Selected Works, tabs aksesibel, detail karya, empty state, serta layout desktop/mobile selesai |
-| 5 Konten pribadi | TODO | Data final belum diberikan |
+| 5 Konten pribadi | NEEDS_CONTENT | Preview slot foto/dokumen dan panduan aset tersedia; data serta aset final belum diberikan |
 | 6 Responsif/aksesibilitas | TODO | |
 | 7 Animasi | TODO | |
 | 8 GitHub Pages | TODO | Remote GitHub aktif; deployment belum dikerjakan |
 
 ## Kekurangan informasi
-Nama publik, email publik, foto, karya dan thumbnail, link video, bio, pengalaman, angka statistik dan penghargaan. Semua boleh menggunakan placeholder saat pengembangan. Screenshot/video referensi belum tersedia; halaman referensi membutuhkan JavaScript dan tidak dapat diverifikasi secara visual melalui akses web yang tersedia.
+Nama publik, email publik, foto profil, CV/dokumen publik, karya dan thumbnail, link video, bio, pengalaman, lokasi/ketersediaan, fokus kerja, software, angka statistik, sertifikasi, penghargaan, dan tautan sosial. Semua boleh menggunakan placeholder yang jelas saat pengembangan. Screenshot/video referensi belum tersedia; halaman referensi membutuhkan JavaScript dan tidak dapat diverifikasi secara visual melalui akses web yang tersedia.
 
 ## Sesi berikutnya
-Baca dokumen dan rencanakan tahap 5 (konten dan aset pribadi) dalam Plan Mode. Bila data belum tersedia, identifikasi field/aset yang diperlukan dan gunakan status `NEEDS_CONTENT`; jangan mengerjakan motion kompleks atau deployment sebelum tahapnya.
+Gunakan preview lokal dan `docs/08-content-assets.md` untuk memilih serta memberikan konten/aset publik. Integrasikan hanya data yang dikonfirmasi, lalu ulangi validasi Tahap 5. Status tetap `NEEDS_CONTENT` sampai placeholder dihapus atau bagian yang belum siap disembunyikan; jangan mengklaim portofolio siap publikasi.
 
 ### Tahap 1 — Fondasi aplikasi
 - Tanggal: 6 Oktober 2026
@@ -75,6 +75,20 @@ Baca dokumen dan rencanakan tahap 5 (konten dan aset pribadi) dalam Plan Mode. B
 - Commit implementasi: `2319fa6` (`feat: build interactive exhibition page`).
 - Keputusan/asumsi baru: Tidak ada dependency baru. State tab dan proyek tetap lokal; identitas proyek menggunakan ID stabil. Tab memakai activation otomatis saat tombol Arrow/Home/End ditekan. Project detail awal sengaja berupa instruksi sampai pengguna memilih item, agar interaksi terpilih terlihat jelas dan tidak mengesankan placeholder sebagai karya default pemilik.
 - Pekerjaan berikutnya: Rencanakan tahap 5 — integrasikan konten dan aset pribadi yang diberikan pengguna. Jika data belum tersedia, buat inventaris kebutuhan dan tandai tahap `NEEDS_CONTENT`; jangan mengklaim portofolio siap publikasi.
+
+### Tahap 5 — Konten dan aset pribadi
+- Tanggal: 6 Oktober 2026
+- Status: NEEDS_CONTENT
+- Tujuan dan hasil: Menyiapkan preview yang aman agar pemilik dapat menentukan foto, dokumen, dan karya sebelum konten final dimasukkan. Struktur data profil kini mendukung foto serta dokumen opsional; Home dan Exhibition menampilkan foto bila `src` serta alt tersedia dan tetap memakai placeholder bila belum ada. About menyediakan area Dokumen publik yang hanya membuat tautan ketika data dokumen tersedia. Folder tujuan aset dan checklist pengisian lengkap telah ditambahkan tanpa memasukkan identitas, karya, foto stok, dokumen palsu, atau informasi yang belum dikonfirmasi.
+- File yang berubah: `src/data/profile.js`, `src/components/HireCard.jsx`, `src/components/exhibition/AboutPanel.jsx`, `src/styles/home.css`, `src/styles/exhibition.css`, `src/assets/images/README.md`, `public/documents/README.md`, dan `docs/08-content-assets.md`.
+- Perintah pemeriksaan dan hasil: Baseline serta pemeriksaan setelah implementasi `npm run lint` lulus dengan 0 warning dan 0 error; `npm run build` lulus dengan Vite 8.3.3; `git diff --check` dan pemeriksaan diff staged lulus tanpa whitespace error. Validasi Chrome DevTools Protocol memastikan placeholder foto dan dokumen tampil, tidak ada gambar rusak, serta lebar dokumen sama dengan viewport pada desktop 1440×1000 dan mobile 390×844.
+- URL preview lokal: Jalankan `npm run dev`, lalu buka `http://localhost:5173/` untuk Home dan `http://localhost:5173/#/exhibition` untuk Exhibition. Panduan lengkap berada di `docs/08-content-assets.md`.
+- Pemeriksaan visual: Dilakukan melalui screenshot Chrome headless untuk Home dan Exhibition About pada desktop 1440×1000 serta mobile 390×844. Slot foto persegi pada kartu Home, slot foto 4:5 pada About, dan empty state Dokumen publik tampil utuh. Susunan mobile berlanjut secara vertikal tanpa horizontal overflow yang terdeteksi.
+- Pemeriksaan keyboard/reduced motion (jika relevan): Tidak ada interaksi keyboard baru selain tautan native yang baru akan muncul saat dokumen tersedia. Placeholder tidak dibuat sebagai kontrol palsu. Tidak ada animasi baru dan aturan global `prefers-reduced-motion` tetap berlaku.
+- Masalah/keterbatasan: Seluruh data dan aset pribadi final masih belum tersedia, sehingga implementasi baru merupakan preview slot dan kontrak data. Proyek demonstrasi, placeholder profil, statistik, pengalaman, skills, kontak, serta metadata generik tetap ada. Situs belum siap publikasi dan Tahap 5 tidak memenuhi kriteria `DONE`.
+- Commit implementasi: `e748181` (`content: prepare profile and asset previews`).
+- Keputusan/asumsi baru: Foto/thumbnail teroptimasi disimpan di `src/assets/images/` dan di-import melalui Vite; dokumen yang aman untuk publik disimpan di `public/documents/` serta dirujuk menggunakan `import.meta.env.BASE_URL`. Foto hanya dirender bila URL dan alt text tersedia. Dokumen tidak memiliki tautan placeholder. Tidak ada dependency baru dan tidak ada aset pribadi yang ditambahkan.
+- Pekerjaan berikutnya: Pemilik meninjau preview lalu memberikan nama publik, teks profil, foto, CV/dokumen publik yang sudah dibersihkan, pengalaman, karya, thumbnail, dan tautan yang ingin ditampilkan. Setelah konten masuk, ulangi lint/build dan preview desktop/mobile; baru tandai `DONE` bila seluruh konten publik telah disetujui dan placeholder dihapus atau disembunyikan.
 
 ## Template catatan tahap — salin untuk setiap tahap
 ### Tahap N — [nama]
