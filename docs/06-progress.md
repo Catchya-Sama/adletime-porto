@@ -1,13 +1,13 @@
 # Progress proyek
 
 ## Status awal
-Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing dan fondasi visual/shared layout selesai dibuat sampai tahap 2. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
+Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/shared layout, dan halaman Home selesai dibuat sampai tahap 3. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
 
 | Tahap | Status | Catatan |
 |---|---|---|
 | 1 Fondasi aplikasi | DONE | React/Vite, HashRouter, route Home dan Exhibition, lint/build/dev/preview lulus |
 | 2 Fondasi visual | DONE | Tokens, font, Header desktop/mobile, Footer, shared container, skip link, dan scroll-to-top selesai |
-| 3 Home | TODO | |
+| 3 Home | DONE | Hero, HireCard, stats, CTA Exhibition, serta Journey accordion berbasis data dan responsif selesai |
 | 4 Exhibition | TODO | |
 | 5 Konten pribadi | TODO | Data final belum diberikan |
 | 6 Responsif/aksesibilitas | TODO | |
@@ -18,7 +18,7 @@ Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing dan fondasi visua
 Nama publik, email publik, foto, karya dan thumbnail, link video, bio, pengalaman, angka statistik dan penghargaan. Semua boleh menggunakan placeholder saat pengembangan. Screenshot/video referensi belum tersedia; halaman referensi membutuhkan JavaScript dan tidak dapat diverifikasi secara visual melalui akses web yang tersedia.
 
 ## Sesi berikutnya
-Baca dokumen dan rencanakan tahap 3 (Home) dalam Plan Mode. Jangan mengerjakan Exhibition lengkap, motion, konten final, atau deployment sebelum tahapnya.
+Baca dokumen dan rencanakan tahap 4 (Exhibition) dalam Plan Mode. Jangan mengerjakan motion kompleks, konten final, atau deployment sebelum tahapnya.
 
 ### Tahap 1 — Fondasi aplikasi
 - Tanggal: 6 Oktober 2026
@@ -47,6 +47,20 @@ Baca dokumen dan rencanakan tahap 3 (Home) dalam Plan Mode. Jangan mengerjakan E
 - Commit implementasi: `0a44341` (`feat: add portfolio design tokens and shared layout`).
 - Keputusan/asumsi baru: Wordmark sementara menggunakan teks `ADLE`; nilai ini bukan pengganti nama publik final. Breakpoint navigasi mobile ditetapkan di bawah 768 px. `profile.socialLinks` tetap array kosong sampai tautan nyata diberikan. Header di-remount berdasarkan pathname untuk memastikan state menu tertutup setelah perubahan route tanpa effect sinkron yang memicu warning React.
 - Pekerjaan berikutnya: Rencanakan tahap 3 — membangun konten dan section Home sesuai roadmap, menggunakan placeholder yang jelas bila data/aset final masih belum tersedia.
+
+### Tahap 3 — Home
+- Tanggal: 6 Oktober 2026
+- Status: DONE
+- Tujuan dan hasil: Home lengkap dibangun sebagai komposisi editorial dua kolom yang terdiri dari Hero, `HireCard` bergaya tiket, kartu statistik berbasis data, blok sertifikasi/pencapaian, CTA menuju Exhibition, serta Journey timeline dengan accordion. Konten yang belum terkonfirmasi memakai placeholder eksplisit; satu entri Journey demo diberi label jelas sebagai contoh dan bukan pengalaman pemilik.
+- File yang berubah: `src/pages/Home.jsx`, `src/components/Hero.jsx`, `src/components/HireCard.jsx`, `src/components/StatsCards.jsx`, `src/components/ExhibitionCTA.jsx`, `src/components/Journey.jsx`, `src/data/profile.js`, `src/data/experience.js`, `src/styles/global.css`, dan `src/styles/home.css`.
+- Perintah pemeriksaan dan hasil: `npm run lint` lulus dengan 0 warning dan 0 error; `npm run build` lulus dengan Vite 8.3.3; `git diff --check` dan `git diff --cached --check` lulus tanpa whitespace error. Dev server mengembalikan HTTP 200 untuk Home dan route Exhibition. Validasi Chrome DevTools Protocol memastikan lebar dokumen sama dengan lebar viewport pada desktop 1440 px dan mobile 500 px, sehingga tidak ditemukan horizontal overflow.
+- URL preview lokal: `http://localhost:5173/` saat menjalankan `npm run dev`; CTA mengarah ke `http://localhost:5173/#/exhibition`.
+- Pemeriksaan visual: Dilakukan melalui screenshot Chrome headless untuk Hero, Exhibition CTA, Journey tertutup, dan Journey terbuka pada desktop 1440×1000 serta mobile 500×844. Hierarki tipografi, kartu tiket, kartu statistik, section CTA, timeline, accordion, dan sambungan ke Footer tampil utuh pada kedua breakpoint. Tampilan mengikuti arah visual dokumentasi, tetapi tidak diklaim pixel-perfect karena screenshot/video referensi asli belum tersedia.
+- Pemeriksaan keyboard/reduced motion (jika relevan): Accordion menggunakan elemen `button` native dengan `aria-expanded`, `aria-controls`, dan ID panel stabil dari `useId`. Panel hanya dirender ketika terbuka, sehingga kontrol di dalam panel tertutup tidak dapat menerima fokus. Pengujian programatis memastikan state berubah dari `aria-expanded="false"` ke `"true"`, detail muncul, dan CTA memindahkan hash route ke `#/exhibition`. Tidak ada motion baru pada tahap ini; aturan global `prefers-reduced-motion` tetap berlaku. Alur Tab penuh masih menjadi bagian audit menyeluruh tahap 6.
+- Masalah/keterbatasan: Foto, nama publik, email, angka statistik, sertifikasi/penghargaan, dan riwayat pengalaman asli belum tersedia. Semua area terkait tetap berupa placeholder yang ditandai dan harus diganti atau disembunyikan pada tahap konten. Exhibition lengkap, animasi kompleks, deployment, dan push tidak termasuk scope tahap ini.
+- Commit implementasi: `7de336c` (`feat: build portfolio home page`).
+- Keputusan/asumsi baru: Copy perkenalan menjelaskan layanan secara umum tanpa menyatakan riwayat atau pencapaian pribadi. Statistik menggunakan nilai `null` dan ditampilkan sebagai “Belum diisi”. Journey disimpan di `src/data/experience.js`; entri sementara menjelaskan format data yang diperlukan dan tidak dianggap sebagai pengalaman nyata. Tidak ada dependency baru.
+- Pekerjaan berikutnya: Rencanakan tahap 4 — membangun Exhibition dengan About, Skills & Tools, Selected Works, tabs aksesibel, detail karya, state kosong, dan placeholder media sesuai roadmap.
 
 ## Template catatan tahap — salin untuk setiap tahap
 ### Tahap N — [nama]
