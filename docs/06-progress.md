@@ -1,7 +1,7 @@
 # Progress proyek
 
 ## Status awal
-Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/shared layout, halaman Home, dan halaman Exhibition selesai dibuat sampai tahap 4. Tahap 5 sudah menyiapkan slot serta panduan aset, tetapi tetap `NEEDS_CONTENT` sampai konten pribadi final diberikan dan dikonfirmasi. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
+Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/shared layout, halaman Home, halaman Exhibition, serta audit responsif dan aksesibilitas selesai dibuat sampai tahap 6. Tahap 5 sudah menyiapkan slot serta panduan aset, tetapi tetap `NEEDS_CONTENT` sampai konten pribadi final diberikan dan dikonfirmasi. Repository Git lokal menggunakan branch `main` dan terhubung ke repository public `https://github.com/Catchya-Sama/adletime-porto.git`; deployment belum dikonfigurasi.
 
 | Tahap | Status | Catatan |
 |---|---|---|
@@ -10,7 +10,7 @@ Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/s
 | 3 Home | DONE | Hero, HireCard, stats, CTA Exhibition, serta Journey accordion berbasis data dan responsif selesai |
 | 4 Exhibition | DONE | About, Skills & Tools, Selected Works, tabs aksesibel, detail karya, empty state, serta layout desktop/mobile selesai |
 | 5 Konten pribadi | NEEDS_CONTENT | Preview slot foto/dokumen dan panduan aset tersedia; data serta aset final belum diberikan |
-| 6 Responsif/aksesibilitas | TODO | |
+| 6 Responsif/aksesibilitas | DONE | Home dan Exhibition lulus audit 360/390/768/1024/1440 px, reflow 320 px, keyboard/fokus, kontras, gambar, console, lint, dan build |
 | 7 Animasi | TODO | |
 | 8 GitHub Pages | TODO | Remote GitHub aktif; deployment belum dikerjakan |
 
@@ -18,7 +18,7 @@ Dokumentasi disiapkan 6 Oktober 2026. Fondasi aplikasi/routing, fondasi visual/s
 Nama publik, email publik, foto profil, CV/dokumen publik, karya dan thumbnail, link video, bio, pengalaman, lokasi/ketersediaan, fokus kerja, software, angka statistik, sertifikasi, penghargaan, dan tautan sosial. Semua boleh menggunakan placeholder yang jelas saat pengembangan. Screenshot/video referensi belum tersedia; halaman referensi membutuhkan JavaScript dan tidak dapat diverifikasi secara visual melalui akses web yang tersedia.
 
 ## Sesi berikutnya
-Gunakan preview lokal dan `docs/08-content-assets.md` untuk memilih serta memberikan konten/aset publik. Integrasikan hanya data yang dikonfirmasi, lalu ulangi validasi Tahap 5. Status tetap `NEEDS_CONTENT` sampai placeholder dihapus atau bagian yang belum siap disembunyikan; jangan mengklaim portofolio siap publikasi.
+Tahap implementasi berikutnya adalah Tahap 7 — animasi dan QA gerakan—bila diminta pengguna. Animasi harus mengikuti `docs/04-motion-spec.md`, menghormati reduced motion, dan tidak mengubah tinggi layout/header secara tidak stabil. Secara paralel, gunakan preview lokal dan `docs/08-content-assets.md` untuk memilih konten/aset publik; Tahap 5 tetap `NEEDS_CONTENT` dan portofolio belum siap publikasi sampai data pribadi final dikonfirmasi.
 
 ### Tahap 1 — Fondasi aplikasi
 - Tanggal: 6 Oktober 2026
@@ -89,6 +89,20 @@ Gunakan preview lokal dan `docs/08-content-assets.md` untuk memilih serta member
 - Commit implementasi: `e748181` (`content: prepare profile and asset previews`).
 - Keputusan/asumsi baru: Foto/thumbnail teroptimasi disimpan di `src/assets/images/` dan di-import melalui Vite; dokumen yang aman untuk publik disimpan di `public/documents/` serta dirujuk menggunakan `import.meta.env.BASE_URL`. Foto hanya dirender bila URL dan alt text tersedia. Dokumen tidak memiliki tautan placeholder. Tidak ada dependency baru dan tidak ada aset pribadi yang ditambahkan.
 - Pekerjaan berikutnya: Pemilik meninjau preview lalu memberikan nama publik, teks profil, foto, CV/dokumen publik yang sudah dibersihkan, pengalaman, karya, thumbnail, dan tautan yang ingin ditampilkan. Setelah konten masuk, ulangi lint/build dan preview desktop/mobile; baru tandai `DONE` bila seluruh konten publik telah disetujui dan placeholder dihapus atau disembunyikan.
+
+### Tahap 6 — Responsif dan aksesibilitas
+- Tanggal: 6 Oktober 2026
+- Status: DONE
+- Tujuan dan hasil: Home dan Exhibition diaudit lintas breakpoint tanpa redesign atau pengisian konten pribadi. State menu mobile kini otomatis ditutup ketika viewport melewati breakpoint desktop sehingga `aria-expanded` tidak tertinggal pada panel yang disembunyikan. Target fokus programatik pada main content, tabpanel, dan detail proyek kembali memiliki indikator `:focus-visible`. Wrapper halaman memakai `overflow: clip` untuk menahan ornamen dekoratif tanpa membuat scroll container tersembunyi. Favicon SVG netral ditambahkan agar production preview tidak menghasilkan request 404.
+- File yang berubah: `index.html`, `public/favicon.svg`, `src/components/Header.jsx`, `src/styles/global.css`, `src/styles/home.css`, dan `src/styles/exhibition.css`.
+- Perintah pemeriksaan dan hasil: Baseline serta pemeriksaan akhir `npm run lint` lulus dengan 0 warning dan 0 error; `npm run build` lulus dengan Vite 8.3.3; `git diff --check` dan staged diff check lulus tanpa whitespace error. Production preview Chrome DevTools Protocol memeriksa Home dan Exhibition pada 360×844, 390×844, 768×1000, 1024×1000, serta 1440×1000. Pada seluruh ukuran, `scrollWidth` sama dengan `clientWidth`, tidak ada gambar rusak atau `img` tanpa alt, route dimuat benar, dan console/network bersih dari warning, error aplikasi, serta respons 4xx. Pemeriksaan reflow tambahan pada lebar 320 px juga lulus tanpa horizontal overflow.
+- URL preview lokal: Jalankan `npm run dev` untuk pengembangan di `http://localhost:5173/` dan `http://localhost:5173/#/exhibition`; validasi akhir build dilakukan melalui `npm run preview` di `http://localhost:4173/` dan route hash Exhibition yang sama.
+- Pemeriksaan visual: Screenshot Chrome headless ditinjau untuk Home dan Exhibition pada 360, 390, 768, 1024, dan 1440 px. Hero, HireCard, statistik, CTA, Journey, hero Exhibition, tabs, panel About, dan sambungan konten tetap utuh. Tidak ada konten tingkat dokumen yang terpotong; tab Exhibition pada mobile sengaja memakai area scroll horizontal lokal agar tiga label tetap terbaca tanpa memperlebar halaman.
+- Pemeriksaan keyboard/reduced motion (jika relevan): Menu mobile membuka/menutup dengan state ARIA yang benar, Escape menutup menu dan mempertahankan fokus pada tombol saat diaktifkan dari tombol tersebut, serta resize ke desktop menghapus panel dan mereset `aria-expanded`. Journey membuka/menutup dan relasi `aria-controls` cocok dengan ID panel. Arrow Right pada tabs memindahkan fokus, pilihan, dan label panel ke Skills & Tools. Pemilihan karya mengatur `aria-pressed`, memfokuskan detail pada mobile, dan menampilkan focus ring. Skip link terlihat saat fokus. Tidak ada animasi baru; aturan `prefers-reduced-motion` tetap tersedia untuk Tahap 7.
+- Masalah/keterbatasan: Tahap 5 tetap `NEEDS_CONTENT`; placeholder profil, pengalaman, statistik, skills, kontak, karya demonstrasi, dan metadata generik masih ada. Audit kontras menghitung kombinasi teks utama: aksen `#c43a31` pada latar `#f5f0eb` sebesar 4,64:1 dan muted `#6b6b6b` pada latar yang sama sebesar 4,71:1, keduanya memenuhi WCAG AA untuk teks normal. Pengujian ini tidak menggantikan audit screen reader manual pada perangkat pengguna. Animasi dan perilaku header berbasis scroll tetap di luar scope dan menjadi Tahap 7.
+- Commit implementasi: `03af65b` (`fix: refine responsive layout and accessibility`).
+- Keputusan/asumsi baru: Tidak ada dependency baru dan tidak ada perubahan arah desain. Favicon menggunakan bentuk huruf “A” generik dengan warna token proyek, bukan foto, logo klien, atau identitas pribadi final. Area tab mobile tetap scrollable secara lokal; menyusun semua tab menjadi beberapa baris tidak dipilih karena akan mengubah komposisi desain.
+- Pekerjaan berikutnya: Jika pengguna meminta, lanjutkan Tahap 7 untuk motion/header berbasis scroll dan QA reduced motion. Jangan push atau deploy. Integrasi konten final tetap dapat dilakukan terpisah untuk menyelesaikan Tahap 5.
 
 ## Template catatan tahap — salin untuk setiap tahap
 ### Tahap N — [nama]
